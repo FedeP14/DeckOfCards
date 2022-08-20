@@ -117,3 +117,14 @@ func Shuffle(cards []Card) []Card {
 	}
 	return ret
 }
+
+// Jokers n is the number of Joker that will be put in the deck
+// Jokers usually don't have a proper rank but in case some game uses it the rank will be from 0 to n
+func Jokers(n int) func([]Card) []Card {
+	return func(cards []Card) []Card {
+		for i := 0; i < n; i++ {
+			cards = append(cards, Card{Suit: Joker, Rank: Rank(i)})
+		}
+		return cards
+	}
+}
