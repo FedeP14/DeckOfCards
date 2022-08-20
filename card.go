@@ -5,7 +5,9 @@ package DeckOfCards
 
 import (
 	"fmt"
+	"math/rand"
 	"sort"
+	"time"
 )
 
 type Suit uint8
@@ -96,4 +98,22 @@ func Less(cards []Card) func(i, j int) bool {
 // absoluteRanks are indispensable for sorting the deck
 func absRanks(c Card) int {
 	return int(c.Suit)*int(maxRank) + int(c.Rank)
+}
+
+// Shuffle Using permutation for shuffling the deck
+// r.Perm(len(cards)) return a permutation of 52 element (in the base case)
+// ex: Perm() returns [6, 4, 19, 52, 34, ..., 49]
+// that means that the first card in cards Slice will be in 6th position, the second card will be in 4th position and so on
+// NB: NOT the most efficient way to do it
+// TODO: read https://www.calhoun.io/how-to-shuffle-arrays-and-slices-in-go/ and change this
+
+func Shuffle(cards []Card) []Card {
+	ret := make([]Card, len(cards))
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	perm := r.Perm(len(cards))
+	// i is the index of the cards Slice, j is the index of the permutation
+	for i, j := range perm {
+		ret[i] = cards[j]
+	}
+	return ret
 }
