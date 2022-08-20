@@ -15,6 +15,8 @@ const (
 	Joker
 )
 
+var suits = [...]Suit{Spade, Diamond, Club, Heart} // needed for New() function cause Joker is a special Suit
+
 type Rank uint8
 
 const (
@@ -34,6 +36,11 @@ const (
 	King
 )
 
+const (
+	minRank = Ace // iterator for managing Ranks
+	maxRank = King
+)
+
 type Card struct {
 	Suit
 	Rank
@@ -45,4 +52,14 @@ func (c Card) String() string {
 	}
 	//return the name of the card
 	return fmt.Sprintf("%s of %ss", c.Rank.String(), c.Suit.String())
+}
+
+func New() []Card {
+	var cards []Card
+	for _, suit := range suits {
+		for rank := minRank; rank <= maxRank; rank++ {
+			cards = append(cards, Card{Suit: suit, Rank: rank})
+		}
+	}
+	return cards
 }
