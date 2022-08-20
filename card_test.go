@@ -2,6 +2,7 @@ package DeckOfCards
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -44,6 +45,22 @@ func TestSort(t *testing.T) {
 	exp := Card{Rank: Ace, Suit: Spade}
 	if cards[0] != exp {
 		t.Error("Expected: ", exp.String(), "Received: ", cards[0])
+	}
+}
+
+func TestShuffle(t *testing.T) {
+	// making the function deterministic
+	shuffleRand = rand.New(rand.NewSource(0))
+	// Perm with that seed [40 35 ...]
+	origin := New()
+	first := origin[40]
+	second := origin[35]
+	cards := New(Shuffle)
+
+	if cards[0] != first {
+		t.Errorf("Expected %s, Received: %s", first, cards[0])
+	} else if cards[1] != second {
+		t.Errorf("Expected %s, Received: %s", second, cards[1])
 	}
 }
 
